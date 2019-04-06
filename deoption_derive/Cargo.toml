@@ -1,0 +1,12 @@
+[package]
+name = "deoption_derive"
+version = "0.1.0"
+authors = ["picklenerd <jordan.t.grace@gmail.com>"]
+edition = "2018"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = "0.15.30"
+quote = "0.6.11"
