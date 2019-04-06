@@ -1,3 +1,5 @@
+pub mod tuples;
+
 pub trait Deoption<T> {
     fn deoption(self) -> Result<T, DeoptionError>;
 }
@@ -31,13 +33,5 @@ impl std::error::Error for DeoptionError {
 impl std::fmt::Display for DeoptionError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{:?}", self.missing_fields)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
     }
 }
