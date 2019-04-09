@@ -82,7 +82,7 @@ mod tests {
     #[derive(Deoption)]
     struct TestStruct {
         name: String,
-        age: std::option::Option<i32>,
+        age: Option<i32>,
         weight: Option<f64>,
     }
 
