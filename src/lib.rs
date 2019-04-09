@@ -35,3 +35,51 @@ impl std::fmt::Display for DeoptionError {
         write!(f, "{:?}", self.missing_fields)
     }
 }
+
+macro_rules! deoption {
+    ($($id:ident),*) => {
+        {
+            let mut missing: Vec<String> = Vec::new();
+
+            $(
+                if $id.is_none() {
+                    missing.push(stringify!($id).to_owned());
+                }
+            )*
+
+            if missing.is_empty() {
+                Ok((
+                    $(
+                        $id.unwrap(),
+                    )*
+                ))
+            } else {
+                Err(missing)
+            }
+
+        }
+    };
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    struct TestStruct {
+        first: Option<i32>,
+        second: Option<String>,
+        third: Option<f64>,
+    }
+
+    #[test]
+    fn test_macro() {
+        let a = Some(1);
+        let b = Some("2");
+        let c: Option<f64> = None;
+
+        match deoption!(a, b, c) {
+            Ok((d, e, f)) => println!("{} {} {}", d, e, f),
+            Err(missing) => println!("{:?}", missing),
+        }
+    }
+}

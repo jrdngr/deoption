@@ -11,7 +11,7 @@ pub fn deoption_derive(input: TokenStream) -> TokenStream {
 
     let gen = quote! {
         impl Deoption for #name {
-            fn deoption(self) -> Result< 
+            fn deoption(self) -> Result<_>
 
         }
     };
