@@ -1,7 +1,9 @@
-pub mod tuples;
+use deoption_derive::Deoption;
 
-pub trait Deoption<T> {
-    fn deoption(self) -> Result<T, DeoptionError>;
+//pub mod tuples;
+
+pub trait Deoption {
+    fn deoption<T>(self) -> Result<T, DeoptionError>;
 }
 
 #[derive(Default, Debug, Clone)]
@@ -65,12 +67,6 @@ macro_rules! deoption {
 mod tests {
     use super::*;
 
-    struct TestStruct {
-        first: Option<i32>,
-        second: Option<String>,
-        third: Option<f64>,
-    }
-
     #[test]
     fn test_macro() {
         let a = Some(1);
@@ -82,4 +78,23 @@ mod tests {
             Err(missing) => println!("{:?}", missing),
         }
     }
+
+    #[derive(Deoption)]
+    struct TestStruct {
+        name: String,
+        age: std::option::Option<i32>,
+        weight: Option<f64>,
+    }
+
+    #[test]
+    fn test_derive() {
+        let test = TestStruct {
+            name: "Bill".to_owned(),
+            age: None,
+            weight: None,
+        };
+
+        test.deoption::<String>();
+    }
+
 }
